@@ -4,10 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,23 +19,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import com.santander.ms.app.telefonos.models.Telefono;
 import com.santander.ms.app.telefonos.service.ITelefonoService;
 
 @RestController
-@RequestMapping(path = "/api/telefono")
 public class TelefonoController {
 	private static Logger log = LoggerFactory.getLogger(TelefonoController.class);
 
 	@Autowired
 	private ITelefonoService telefonoService;
 
-	@GetMapping("/")
+	@GetMapping("/listar")
 	public List<Telefono> listaTelefonos() {
 		return telefonoService.findAllPhones();
 	}
@@ -63,7 +62,7 @@ public class TelefonoController {
 	}
 
 	@PostMapping("/")
-	public ResponseEntity<?> agregarEquipoTelefonico(@RequestBody Telefono equipo) {
+	public ResponseEntity<?> agregarEquipoTelefonico(@Valid @RequestBody Telefono equipo) {
 		Telefono telDB = null;
 		Map<String, Object> response = new HashMap<>();
 		try {
@@ -81,7 +80,7 @@ public class TelefonoController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> editarEquipoTelefonico(@RequestBody Telefono equipo, @PathVariable String id) {
+	public ResponseEntity<?> editarEquipoTelefonico(@Valid @RequestBody Telefono equipo, @PathVariable String id) {
 
 		Map<String, Object> response = new HashMap<>();
 		Telefono telDB = telefonoService.findPhoneById(id);

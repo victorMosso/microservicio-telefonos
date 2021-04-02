@@ -1,5 +1,9 @@
 package com.santander.ms.app.telefonos.models;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,18 +14,23 @@ public class Telefono {
 	@Id
 	private String id;	
 	@NonNull
+	@NotEmpty
 	private String nombre_marca;
 	@NonNull
+	@NotEmpty
 	private String modelo;
 	@NonNull
+	@NotEmpty
 	private String nombre_corto;
 	@NonNull
+	@NotEmpty
 	private String fecha_creacion;
 	@NonNull
 	private String imei;
 	
 	private String numero_celular;
-
+	
+	@Email
 	private String email;
 	
 	private boolean ios;
@@ -97,6 +106,7 @@ public class Telefono {
 	public void setIos(boolean ios) {
 		this.ios = ios;
 	}
+
 
 	@Override
 	public String toString() {
